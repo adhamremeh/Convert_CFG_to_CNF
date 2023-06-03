@@ -1,17 +1,11 @@
 Map<String, List<String>> cfg = {};
 List<String> nullableHeads = [];
 bool canRemoveMoreNullables = false;
-// String input = '''
-//     S -> aS | SS | bA
-//     A -> BB
-//     B -> ab | aAbC | aAb | CC
-//     C -> ε
-//   ''';
 String input = '''
-S -> ASB|a|bC
-A -> aAS|a|ε 
-B -> SbS|cD|A|bb|B
-F -> l|i|x
+    S -> aS | SS | bA
+    A -> BB
+    B -> ab | aAbC | aAb | CC
+    C -> ε
   ''';
 
 void main() {
@@ -70,7 +64,6 @@ void removeNonGeneratingProductions(Map<String, List<String>> cfg) {
   }
 }
 
-
 void removeNonReachableProductions(Map<String, List<String>> cfg) {
   Map<String, bool> allVaraibles = {};
   cfg.keys.toList().forEach((element) {
@@ -80,7 +73,7 @@ void removeNonReachableProductions(Map<String, List<String>> cfg) {
   for (final variable in allVaraibles.keys)
     for (String head in cfg.keys) {
       for (String part in cfg[head]!) {
-        if (part.contains(variable)) {
+        if (part.contains(variable) && head != variable) {
           allVaraibles[variable] = true;
           break;
         }
